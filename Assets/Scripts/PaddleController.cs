@@ -5,6 +5,7 @@ using UnityEngine;
 public class PaddleController : MonoBehaviour
 {
     Rigidbody2D paddleRigidbody;
+    public float moveSpeed;
 
     private void Awake()
     {
@@ -21,5 +22,32 @@ public class PaddleController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void FixedUpdate()
+    {
+        TouchMove();
+    }
+
+    void TouchMove()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            if(touchPos.x < 0)
+            {
+                paddleRigidbody.velocity = Vector2.left * moveSpeed;
+            }
+            else
+            {
+                paddleRigidbody.velocity = Vector2.right * moveSpeed;
+            }
+        }
+        else
+        {
+            paddleRigidbody.velocity = Vector2.zero;
+        }
+
     }
 }
